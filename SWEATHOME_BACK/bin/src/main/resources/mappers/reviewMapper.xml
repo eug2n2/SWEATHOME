@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ssafit.model.dao.ReviewDao">
+
+    <select id="selectReviewAll" resultType="Review" parameterType="int">
+		SELECT review_id, video_id, user_id, user_name, content, rate, date_format(write_time,'%y-%m-%d') AS write_time
+		FROM Review
+		WHERE video_id = #{videoId};
+	</select>
+
+	<insert id="insertReview" parameterType="Review" keyProperty="reviewId" useGeneratedKeys="true">
+		INSERT INTO Review (review_id, video_id, user_id, user_name, content, rate)
+		VALUES (#{reviewId}, #{videoId}, #{userId}, #{userName}, #{content}, #{rate});
+	</insert>
+
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM Review
+		WHERE review_id = #{reviewId};
+	</delete>
+
+	<update id="updateReview" parameterType="Review">
+		UPDATE Review
+		SET content = #{content}
+		WHERE review_id = #{reviewId};
+	</update>
+	
+</mapper>

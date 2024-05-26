@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ssafit.model.dao.StickerDao">
+
+	<!-- 스티커 번호 아이디 중복검사 -->
+	<select id="checkSticker" parameterType="Sticker" resultType="int">
+		SELECT COUNT(sticker_no)
+		FROM Sticker
+		WHERE user_id = #{userId} and sticker_no = #{stickerNo};
+	</select>
+	
+	<insert id="insertSticker" parameterType="Sticker">
+	Insert into Sticker(user_id,sticker_no) Values (#{userId} ,#{stickerNo});
+	</insert>
+
+  <resultMap id="StickerResultMap" type="Integer" >
+        <id property="stickerNo" column="sticker_no"/>
+    </resultMap>
+
+    <select id="getStickersByUserId" parameterType="String" resultMap="StickerResultMap">
+        SELECT sticker_no
+        FROM Sticker
+        WHERE user_id = #{userId}
+    </select>
+</mapper>

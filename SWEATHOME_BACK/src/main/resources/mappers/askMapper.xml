@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ssafit.model.dao.AskDao">
+	<!-- 영상 요청 목록 -->
+	<select id="selectAskAll" resultType="Ask" parameterType="int">
+		SELECT ask_id, user_id, user_name, ask_title, link
+		FROM Videoask;
+	</select>
+
+	<!-- 영상 요청 목록 -->
+	<select id="selectAsk" resultType="Ask" parameterType="String">
+		SELECT ask_id, user_id, user_name, ask_title, link
+		FROM Videoask
+		Where user_id = #{userId};;
+	</select>
+	<!-- 영상 요청 추가 -->
+	<insert id="insertAsk" parameterType="Ask" keyProperty="askId" useGeneratedKeys="true">
+		INSERT INTO Videoask (ask_id, user_id, user_name, ask_title, link)
+		VALUES (#{askId}, #{userId}, #{userName}, #{askTitle}, #{link});
+	</insert>
+	
+	<!-- 영상 요청 삭제 -->
+	<delete id="deleteAsk" parameterType="int" >
+		DELETE FROM Videoask
+		WHERE ask_id = #{askId};
+	</delete>
+</mapper>

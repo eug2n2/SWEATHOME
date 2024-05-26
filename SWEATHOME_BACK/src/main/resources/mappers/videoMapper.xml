@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ssafit.model.dao.VideoDao">
+
+	<select id="selectPart" parameterType="Video" resultType="Video">
+		SELECT Video.video_id, video_title, Video.view_cnt,(SELECT
+		count(vl.user_id) FROM
+		Videolike as vl WHERE vl.video_id = Video.video_id) as like_cnt,
+		Round((SELECT AVG(rate) FROM Review WHERE video_id = Video.video_id),1) AS rate_avg,
+		part, link
+		FROM Video
+		WHERE Video.part = #{part} and Video.video_id !=#{videoId}
+		ORDER BY Video.view_cnt DESC
+		LIMIT 5;
+	</select>
+
+	<select id="selectAll" resultType="Video">
+		SELECT v.video_id, v.video_title, v.view_cnt,
+		(SELECT COUNT(vl.user_id) FROM Videolike vl WHERE vl.video_id = v.video_id) AS like_cnt,
+		ROUND((SELECT AVG(r.rate) FROM Review r WHERE r.video_id = v.video_id), 1) AS rate_avg,
+		v.part, v.link
+		FROM Video v;
+	</select>
+	<select id="selectOne" resultType="Video" parameterType="int">
+		SELECT
+		video_id, video_title, view_cnt, (SELECT count(user_id) FROM
+		Videolike
+		WHERE video_id = #{videoId}) as like_cnt,
+		ROUND((SELECT AVG(rate) FROM
+		Review WHERE video_id = #{videoId}),1) AS rate_avg,
+		part, link
+		FROM
+		Video
+		WHERE video_id = #{videoId};
+	</select>
+
+	<update id="updateViewCnt" parameterType="int">
+		UPDATE Video
+		SET
+		view_cnt = view_cnt + 1
+		WHERE video_id = #{videoId};
+	</update>
+
+	<insert id="insertVideo" parameterType="Video"
+		keyProperty="videoId" useGeneratedKeys="true">
+		INSERT INTO Video (video_title,
+		part, link)
+		VALUES (#{videoTitle}, #{part}, #{link});
+	</insert>
+
+	<delete id="deleteVideo" parameterType="int">
+		DELETE FROM Video
+		WHERE
+		video_id = #{videoId};
+	</delete>
+
+	<update id="updateVideo" parameterType="Video">
+		UPDATE Video
+		SET
+		video_title = #{videoTitle}, link = #{link}, part=#{part}
+		WHERE video_id =
+		#{videoId};
+	</update>
+
+	<select id="search" resultType="Video" parameterType="String">
+		SELECT
+		Video.video_id, video_title, view_cnt, (SELECT count(vl.user_id) FROM
+		Videolike as vl WHERE vl.video_id = Video.video_id) as like_cnt,
+		(SELECT Round(AVG(rate),1) FROM Review WHERE video_id =
+		Video.video_id) AS rate_avg,
+		part, link
+		FROM Video
+		WHERE video_title LIKE concat('%', #{word}, '%');
+	</select>
+
+	<!-- 'word'와 일치하는 part를 가진 비디오들의 평균 별점을 가져오는 쿼리 -->
+	<select id="searchPart" resultType="Video"
+		parameterType="String">
+		SELECT Video.video_id, video_title, view_cnt,(SELECT
+		count(vl.user_id) FROM
+		Videolike as vl WHERE vl.video_id =
+		Video.video_id) as like_cnt,
+		Round((SELECT AVG(rate) FROM Review WHERE
+		video_id = Video.video_id),1) AS rate_avg,
+		part, link
+		FROM Video
+		WHERE
+		part = #{word};
+	</select>
+
+</mapper>
