@@ -35,6 +35,9 @@
 ![image](https://github.com/eug2n2/SWEATHOME/assets/107859104/4c01b6e0-4847-4b5b-ac5d-a6dce6b8382a)
 
 ## 6️⃣ 기능
+페이지 흐름도
+![image](https://github.com/eug2n2/SWEATHOME/assets/107859104/247121a3-fbea-4b27-96c8-1abcce147f39)
+
 - 회원가입
 ![image](https://github.com/eug2n2/SWEATHOME/assets/107859104/cce46042-008c-4346-9784-edcf7c6051bc)
 
