@@ -47,7 +47,7 @@
 - 비밀번호 찾기
 ![image](https://github.com/eug2n2/SWEATHOME/assets/107859104/614a628f-c1c4-408d-83fa-92012e8328f9)
 
-네이버 메일 api와 smtp를 사용
+네이버 메일 api와 smtp를 사용하여 하드웨어나 소프트웨어와 관계없이 데이터를 교환할 수 있음
 ![image](https://github.com/eug2n2/SWEATHOME/assets/107859104/b1d2d5a5-77d4-46b2-95ac-e1c9a7992e13)
 
 - 홈트레이닝 영상 전체 목록 조회
